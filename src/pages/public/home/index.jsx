@@ -3,6 +3,7 @@ import Category1 from "../../../assets/categorias/image-01.png";
 import Category2 from "../../../assets/categorias/image-02.png";
 import Category3 from "../../../assets/categorias/image-03.png";
 import Category4 from "../../../assets/categorias/image-04.png";
+import Card from "../../../components/card";
 
 export default function Home() {
   return (
@@ -52,7 +53,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section></section>
+      <section className="mt-8">
+        <h2 className="text-xl text-slate-900 font-semibold uppercase">
+          Mais Vendidos
+        </h2>
+
+        <div className="mt-4 w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </section>
     </main>
   );
 }
