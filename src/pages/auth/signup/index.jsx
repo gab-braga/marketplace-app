@@ -1,5 +1,8 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "../../../config/api";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const {
@@ -7,9 +10,20 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   function onSubmit(data) {
-    // console.log(data);
+    const { nome, email, senha } = data;
+    axios
+      .post(ENDPOINTS.postSignup(), { nome, email, senha })
+      .then((_) => {
+        toast.success("Cadastro concluído.");
+        navigate("/auth/login");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Erro ao cadastrar. Consulte o suporte.");
+      });
   }
 
   return (

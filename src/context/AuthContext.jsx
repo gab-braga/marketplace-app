@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   }
 
   function isAdmin() {
-    return isLogged && user.role === "admin";
+    return isLogged && user?.role === "admin";
   }
 
   useEffect(() => {

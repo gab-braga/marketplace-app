@@ -16,12 +16,14 @@ import {
 } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { register, handleSubmit } = useForm();
+  const { isLogged, isAdmin, logout } = useAuth();
 
   function onSubmit(data) {
     const { search } = data;
@@ -76,95 +78,127 @@ export default function Header() {
           }`}
         >
           <ul className="flex flex-col lg:flex-row items-start justify-stretch gap-4">
-            <li>
-              <Link
-                to="/auth/login"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <LockOpen className="text-inherit" weight="regular" size={20} />
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/auth/signup"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <CursorClick
-                  className="text-inherit"
-                  weight="regular"
-                  size={20}
-                />
-                Cadastre-se
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <Users className="text-inherit" weight="regular" size={20} />
-                Usuários
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <Tag className="text-inherit" weight="regular" size={20} />
-                Produtos
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <ChartBar className="text-inherit" weight="regular" size={20} />
-                Vendas
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <ShoppingCart
-                  className="text-inherit"
-                  weight="regular"
-                  size={20}
-                />
-                Carrinho
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <Package className="text-inherit" weight="regular" size={20} />
-                Pedidos
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <User className="text-inherit" weight="regular" size={20} />
-                Conta
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
-              >
-                <SignOut className="text-inherit" weight="regular" size={20} />
-                Sair
-              </Link>
-            </li>
+            {!isLogged() && (
+              <>
+                <li>
+                  <Link
+                    to="/auth/login"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <LockOpen
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/auth/signup"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <CursorClick
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Cadastre-se
+                  </Link>
+                </li>
+              </>
+            )}
+            {isAdmin() && (
+              <>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <Users
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Usuários
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <Tag className="text-inherit" weight="regular" size={20} />
+                    Produtos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <ChartBar
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Vendas
+                  </Link>
+                </li>
+              </>
+            )}
+            {isLogged() && (
+              <>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <ShoppingCart
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Carrinho
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <Package
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Pedidos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <User className="text-inherit" weight="regular" size={20} />
+                    Conta
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={logout}
+                    className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
+                  >
+                    <SignOut
+                      className="text-inherit"
+                      weight="regular"
+                      size={20}
+                    />
+                    Sair
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

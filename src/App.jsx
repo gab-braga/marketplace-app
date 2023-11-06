@@ -8,6 +8,8 @@ import Search from "./pages/public/search";
 import Auth from "./pages/auth";
 import Login from "./pages/auth/login";
 import Signup from "./pages/auth/signup";
+import Admin from "./pages/admin";
+import Logged from "./pages/logged";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Route>
+          <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/logged" element={<Logged />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
