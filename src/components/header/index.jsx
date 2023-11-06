@@ -112,7 +112,7 @@ export default function Header() {
               <>
                 <li>
                   <Link
-                    to="/"
+                    to="/admin/users"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <Users
@@ -125,7 +125,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to="/admin/products"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <Tag className="text-inherit" weight="regular" size={20} />
@@ -134,7 +134,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to="/admin/sales"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <ChartBar
@@ -151,7 +151,7 @@ export default function Header() {
               <>
                 <li>
                   <Link
-                    to="/"
+                    to="/logged/cart"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <ShoppingCart
@@ -164,7 +164,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to="/logged/orders"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <Package
@@ -177,7 +177,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to="/logged/profile"
                     className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
                   >
                     <User className="text-inherit" weight="regular" size={20} />

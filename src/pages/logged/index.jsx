@@ -13,7 +13,6 @@ export default function Logged() {
   return (
     <>
       <Header />
-      <h1>Logado</h1>
       <Outlet />
       <Footer />
     </>

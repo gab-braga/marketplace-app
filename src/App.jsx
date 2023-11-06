@@ -10,6 +10,12 @@ import Login from "./pages/auth/login";
 import Signup from "./pages/auth/signup";
 import Admin from "./pages/admin";
 import Logged from "./pages/logged";
+import Users from "./pages/admin/users";
+import Products from "./pages/admin/products";
+import Sales from "./pages/admin/sales";
+import Cart from "./pages/logged/cart";
+import Profile from "./pages/logged/profile";
+import Orders from "./pages/logged/orders";
 
 function App() {
   return (
@@ -25,8 +31,16 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Route>
-          <Route path="/admin" element={<Admin />}></Route>
-          <Route path="/logged" element={<Logged />}></Route>
+          <Route path="/admin" element={<Admin />}>
+            <Route path="users" element={<Users />} />
+            <Route path="products" element={<Products />} />
+            <Route path="sales" element={<Sales />} />
+          </Route>
+          <Route path="/logged" element={<Logged />}>
+            <Route path="cart" element={<Cart />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="orders" element={<Orders />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
