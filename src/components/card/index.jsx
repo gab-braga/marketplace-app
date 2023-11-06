@@ -4,7 +4,10 @@ import Stars from "../stars";
 
 export default function Card() {
   return (
-    <Link to="/" className="border border-slate-400 rounded-md overflow-hidden">
+    <Link
+      to="/product/1"
+      className="border border-slate-400 rounded-md overflow-hidden"
+    >
       <div className="h-full p-0 flex flex-col items-start">
         <img src={Product} className="w-full object-cover object-center" />
         <div className="w-full flex-1 px-4 py-1 flex flex-col">
