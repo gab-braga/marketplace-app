@@ -15,10 +15,18 @@ import {
   LockOpen,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { register, handleSubmit } = useForm();
+
+  function onSubmit(data) {
+    const { search } = data;
+    navigate(`/search/${search}`);
+  }
 
   return (
     <header className="w-full p-4 bg-slate-900">
@@ -35,13 +43,18 @@ export default function Header() {
             className="h-10 min-h-min block sm:hidden"
           />
         </Link>
-        <form className="flex-1 flex items-center">
+        <form
+          className="flex-1 flex items-center"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <input
             type="text"
             className="flex-1 w-full max-w-md h-8 px-5 border-none rounded-s-full text-white outline-none bg-slate-800"
+            required
+            {...register("search")}
           />
           <button
-            onClick={() => navigate("/search/blusa")}
+            type="submit"
             className="inline-block w-9 h-8 bg-slate-800 overflow-hidden rounded-e-full"
           >
             <MagnifyingGlass

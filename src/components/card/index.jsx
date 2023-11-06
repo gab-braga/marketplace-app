@@ -1,24 +1,36 @@
 import { Link } from "react-router-dom";
-import Product from "../../assets/imagens/image-01.jpg";
 import Stars from "../stars";
 
-export default function Card() {
+export default function Card({
+  id,
+  nome,
+  foto,
+  avaliacaoTotal,
+  avaliacaoMedia,
+  desconto,
+  preco,
+  precoFinal,
+}) {
   return (
     <Link
-      to="/product/1"
+      to={`/product/${id}`}
       className="border border-slate-400 rounded-md overflow-hidden"
     >
       <div className="h-full p-0 flex flex-col items-start">
-        <img src={Product} className="w-full object-cover object-center" />
+        <img src={foto} className="w-full object-cover object-center" />
         <div className="w-full flex-1 px-4 py-1 flex flex-col">
           <h4 className="text-md text-slate-900 font-medium truncate">
-            Blusa Verde Masculina
+            {nome}
           </h4>
-          <Stars rating={3.6} total={330} />
+          <Stars rating={avaliacaoMedia} total={avaliacaoTotal} />
           <div className="mt-3 flex-1 flex items-end justify-between">
-            <span className="text-xs text-slate-600 line-through">R$ 250</span>
+            {desconto > 0 && (
+              <span className="text-xs text-slate-600 line-through">
+                R$ {preco}
+              </span>
+            )}
             <span className="text-end flex-1 text-md text-slate-900 font-bold">
-              R$ 150
+              R$ {precoFinal}
             </span>
           </div>
         </div>
