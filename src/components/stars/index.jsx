@@ -23,7 +23,7 @@ export default function Stars({ rating, total }) {
   return (
     <div className="flex items-center justify-start gap-2">
       <div className="grid grid-cols-5">{renderStars()}</div>
-      <span>{total} avalições</span>
+      <span>{total} avaliações</span>
     </div>
   );
 }

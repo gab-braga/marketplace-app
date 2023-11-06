@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.svg";
 import LogoMobile from "../../assets/logo-mobile.svg";
 import {
@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 
 export default function Header() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -39,7 +40,10 @@ export default function Header() {
             type="text"
             className="flex-1 w-full max-w-md h-8 px-5 border-none rounded-s-full text-white outline-none bg-slate-800"
           />
-          <button className="inline-block w-9 h-8 bg-slate-800 overflow-hidden rounded-e-full">
+          <button
+            onClick={() => navigate("/search/blusa")}
+            className="inline-block w-9 h-8 bg-slate-800 overflow-hidden rounded-e-full"
+          >
             <MagnifyingGlass
               weight="regular"
               size={20}
