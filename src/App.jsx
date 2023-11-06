@@ -7,6 +7,7 @@ import Public from "./pages/public";
 import Search from "./pages/public/search";
 import Auth from "./pages/auth";
 import Login from "./pages/auth/login";
+import Signup from "./pages/auth/signup";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           </Route>
           <Route path="/auth" element={<Auth />}>
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
           </Route>
         </Route>
       </Routes>

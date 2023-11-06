@@ -87,7 +87,7 @@ export default function Header() {
             </li>
             <li>
               <Link
-                to="/"
+                to="/auth/signup"
                 className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
               >
                 <CursorClick
