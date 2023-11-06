@@ -78,7 +78,7 @@ export default function Header() {
           <ul className="flex flex-col lg:flex-row items-start justify-stretch gap-4">
             <li>
               <Link
-                to="/"
+                to="/auth/login"
                 className="flex items-center justify-start gap-3 lg:gap-1 text-slate-300 hover:text-slate-100"
               >
                 <LockOpen className="text-inherit" weight="regular" size={20} />
