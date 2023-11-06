@@ -1,5 +1,9 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import axios from "axios";
+import { ENDPOINTS } from "../../../config/api";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const {
@@ -7,9 +11,23 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   function onSubmit(data) {
-    console.log(data);
+    const { email, senha } = data;
+    axios
+      .post(ENDPOINTS.postLogin(), { email, senha })
+      .then(({ data }) => {
+        const { token } = data;
+        login(token);
+        navigate("/");
+        toast.success("Bem-vindo(a).");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Erro ao autenticar.");
+      });
   }
 
   return (

@@ -8,4 +8,8 @@ export const ENDPOINTS = {
     `${BASE_URL}/public/products/category/${category}`,
   getPublicProductsByName: (name) =>
     `${BASE_URL}/public/products/search/${name}`,
+
+  // auth
+  postLogin: () => `${BASE_URL}/auth/login`,
+  postSignup: () => `${BASE_URL}/auth/register`,
 };
