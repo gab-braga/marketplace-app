@@ -3,12 +3,17 @@ import Card from "../../../components/card";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ENDPOINTS } from "../../../config/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import toast from "react-hot-toast";
 
 export default function Product() {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState(null);
   const { id } = useParams();
+
+  const { isLogged, user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(ENDPOINTS.getPublicProduct(id)).then(({ data }) => {
@@ -24,6 +29,23 @@ export default function Product() {
         setProducts(data);
       });
   }, [product]);
+
+  function addCart(produto_id) {
+    if (isLogged()) {
+      const token = localStorage.getItem("token");
+      axios
+        .post(
+          ENDPOINTS.postClientCart(user?.id),
+          { produto_id },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then(() => {
+          toast.success("Item adicionado ao carrinho.");
+        });
+    } else {
+      navigate("/auth/login");
+    }
+  }
 
   return (
     <main className="container mx-auto p-6 pb-16 flex-1">
@@ -54,7 +76,10 @@ export default function Product() {
             />
 
             <div className="flex-1 mt-4 flex flex-col-reverse xs:flex-row items-start md:items-end justify-between gap-2">
-              <button className="px-4 py-1 rounded-md bg-slate-900 text-slate-50 uppercase transition-colors hover:bg-slate-800">
+              <button
+                onClick={() => addCart(product?.id)}
+                className="px-4 py-1 rounded-md bg-slate-900 text-slate-50 uppercase transition-colors hover:bg-slate-800"
+              >
                 Adicionar ao carrinho
               </button>
 
