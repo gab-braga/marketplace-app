@@ -32,7 +32,7 @@ export const ENDPOINTS = {
   getClientOrdersProduct: (idU, idP) =>
     `${BASE_URL}/client/orders/${idU}/products/${idP}`,
   getClientOrdersPurchase: (id) => `${BASE_URL}/client/orders/purchase/${id}`,
-  getClientOrdersEvaluate: (id) => `${BASE_URL}/client/orders/${id}/evaluate`,
+  postClientOrdersEvaluate: (id) => `${BASE_URL}/client/orders/${id}/evaluate`,
 
   // admin - users
   getAdminUsers: () => `${BASE_URL}/admin/users`,

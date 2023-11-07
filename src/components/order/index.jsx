@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { ENDPOINTS } from "../../config/api";
+import Modal from "../modal";
 
 export default function Order({ produto_id, compra_id, quantidade, total }) {
   const [product, setProduct] = useState(null);
   const [purchase, setPurchase] = useState(null);
   const [evaluate, setEvaluate] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const { user } = useAuth();
 
   function initializeData() {
@@ -34,6 +36,22 @@ export default function Order({ produto_id, compra_id, quantidade, total }) {
 
   function formatDate(str) {
     return new Date(str).toLocaleDateString();
+  }
+
+  function evaluateProduct(value) {
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        ENDPOINTS.postClientOrdersEvaluate(user?.id),
+        { nota: value, produto_id },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then(() => {
+        setOpenModal(false);
+        initializeData();
+      });
   }
 
   return (
@@ -68,15 +86,58 @@ export default function Order({ produto_id, compra_id, quantidade, total }) {
         </div>
 
         {evaluate == null ? (
-          <button className="w-full text-center mt-4 px-4 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 uppercase transition-colors hover:bg-slate-800 hover:text-slate-50">
+          <button
+            onClick={() => setOpenModal(true)}
+            className="w-full text-center mt-4 px-4 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 uppercase transition-colors hover:bg-slate-800 hover:text-slate-50"
+          >
             Avaliar
           </button>
         ) : (
           <div className="text-center mt-4 px-4 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800">
-            4 estrelas
+            {evaluate?.nota} estrelas
           </div>
         )}
       </div>
+
+      {openModal && (
+        <Modal
+          title="Avaliar produto"
+          message={`O que você achou de ${product?.nome}?`}
+        >
+          <div className="flex gap-2">
+            <button
+              onClick={() => evaluateProduct(1)}
+              className="text-center mt-4 px-3 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 transition-colors hover:bg-slate-800 hover:text-slate-50"
+            >
+              1
+            </button>
+            <button
+              onClick={() => evaluateProduct(2)}
+              className="text-center mt-4 px-3 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 transition-colors hover:bg-slate-800 hover:text-slate-50"
+            >
+              2
+            </button>
+            <button
+              onClick={() => evaluateProduct(3)}
+              className="text-center mt-4 px-3 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 transition-colors hover:bg-slate-800 hover:text-slate-50"
+            >
+              3
+            </button>
+            <button
+              onClick={() => evaluateProduct(4)}
+              className="text-center mt-4 px-3 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 transition-colors hover:bg-slate-800 hover:text-slate-50"
+            >
+              4
+            </button>
+            <button
+              onClick={() => evaluateProduct(5)}
+              className="text-center mt-4 px-3 py-1 rounded-md bg-slate-50 text-slate-900 border border-slate-800 transition-colors hover:bg-slate-800 hover:text-slate-50"
+            >
+              5
+            </button>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
