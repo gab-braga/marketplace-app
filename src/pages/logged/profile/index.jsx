@@ -4,6 +4,8 @@ import axios from "axios";
 import { ENDPOINTS } from "../../../config/api";
 import avatar from "../../../assets/imagens/avatar.jpg";
 import FormUser from "./FormUser";
+import FormAddress from "./FormAddress";
+import FormPassword from "./FormPassword";
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
@@ -79,6 +81,22 @@ export default function Profile() {
         </h2>
 
         <FormUser />
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl text-slate-900 font-semibold uppercase">
+          Dados de Endereço
+        </h2>
+
+        <FormAddress />
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl text-slate-900 font-semibold uppercase">
+          Senha
+        </h2>
+
+        <FormPassword />
       </section>
     </main>
   );

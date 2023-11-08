@@ -77,7 +77,7 @@ export default function FormUser() {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="dataNasc">
+          <label htmlFor="dataNascimento">
             Data de Nascimento<span className="text-red-700">*</span>
           </label>
           <input
