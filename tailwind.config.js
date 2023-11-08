@@ -6,6 +6,9 @@ export default {
       screens: {
         xs: "480px",
       },
+      minWidth: {
+        table: "940px",
+      },
     },
   },
   plugins: [],
