@@ -3,6 +3,7 @@ import { useAuth } from "../../../context/AuthContext";
 import axios from "axios";
 import { ENDPOINTS } from "../../../config/api";
 import avatar from "../../../assets/imagens/avatar.jpg";
+import FormUser from "./FormUser";
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
@@ -70,6 +71,14 @@ export default function Profile() {
             {userData?.nome}
           </h2>
         </div>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl text-slate-900 font-semibold uppercase">
+          Dados Pessoais
+        </h2>
+
+        <FormUser />
       </section>
     </main>
   );
