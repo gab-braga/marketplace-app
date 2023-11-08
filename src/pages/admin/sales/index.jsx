@@ -3,9 +3,13 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { ENDPOINTS } from "../../../config/api";
+import Modal from "../../../components/modal";
 
 export default function Sales() {
   const [sales, setSales] = useState([]);
+  const [saleIdDetails, setSaleIdDetails] = useState(null);
+  const [itemsSale, setItemsSale] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   function initializeTable() {
     const token = localStorage.getItem("token");
@@ -17,6 +21,19 @@ export default function Sales() {
         setSales(data);
       });
   }
+
+  useEffect(() => {
+    if (saleIdDetails) {
+      const token = localStorage.getItem("token");
+      axios
+        .get(ENDPOINTS.getAdminPurchaseItems(saleIdDetails), {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(({ data }) => {
+          setItemsSale(data);
+        });
+    }
+  }, [saleIdDetails]);
 
   useEffect(() => {
     initializeTable();
@@ -102,7 +119,13 @@ export default function Sales() {
                     R$ {s?.total}
                   </td>
                   <td className="px-2 py-1 border border-slate-900">
-                    <button className="w-full flex items-center justify-center gap-2 px-2 py-1 rounded text-slate-200 bg-slate-800">
+                    <button
+                      onClick={() => {
+                        setOpenModal(true);
+                        setSaleIdDetails(s?.id);
+                      }}
+                      className="w-full flex items-center justify-center gap-2 px-2 py-1 rounded text-slate-200 bg-slate-800"
+                    >
                       <Eye />
                       Mais
                     </button>
@@ -113,6 +136,35 @@ export default function Sales() {
           </table>
         </div>
       </section>
+
+      {openModal && (
+        <Modal title="Detalhes da Compra">
+          <div className="w-full">
+            {itemsSale.map((i) => (
+              <div
+                key={i?.id}
+                className="w-full mb-3 flex flex-col gap-2 border-b border-slate-400 py-2"
+              >
+                <strong className="font-medium text-slate-500 uppercase">
+                  {i?.produto?.nome}
+                </strong>
+                <span className="text-slate-800">
+                  Quantidade: {i?.quantidade}
+                </span>
+              </div>
+            ))}
+            <button
+              onClick={() => {
+                setOpenModal(false);
+                setSaleIdDetails(null);
+              }}
+              className="text-center px-2 py-1 rounded text-slate-50 bg-slate-900 transition-colors hover:bg-slate-800"
+            >
+              Fechar
+            </button>
+          </div>
+        </Modal>
+      )}
     </main>
   );
 }
