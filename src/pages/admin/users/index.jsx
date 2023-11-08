@@ -3,11 +3,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { ENDPOINTS } from "../../../config/api";
+import Modal from "../../../components/modal";
+import toast from "react-hot-toast";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+  const [openModalDisable, setOpenModalDisable] = useState(false);
+  const [userIdDisable, setUserIdDisable] = useState(null);
+
+  const [openModalEnable, setOpenModalEnable] = useState(false);
+  const [userIdEnable, setUserIdEnable] = useState(null);
+
+  function initializeTable() {
     const token = localStorage.getItem("token");
     axios
       .get(ENDPOINTS.getAdminUsers(), {
@@ -16,7 +24,51 @@ export default function Users() {
       .then(({ data }) => {
         setUsers(data);
       });
+  }
+
+  useEffect(() => {
+    initializeTable();
   }, []);
+
+  function disableUser() {
+    if (userIdDisable != null) {
+      const token = localStorage.getItem("token");
+      axios
+        .put(
+          ENDPOINTS.putAdminUserDisable(userIdDisable),
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then(() => {
+          toast.success("Usuário desabilitado.");
+          setOpenModalDisable(false);
+          setUserIdDisable(null);
+          initializeTable();
+        });
+    }
+  }
+
+  function enableUser() {
+    if (userIdEnable != null) {
+      const token = localStorage.getItem("token");
+      axios
+        .put(
+          ENDPOINTS.putAdminUserEnable(userIdEnable),
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then(() => {
+          toast.success("Usuário habilitado.");
+          setOpenModalEnable(false);
+          setUserIdEnable(null);
+          initializeTable();
+        });
+    }
+  }
 
   return (
     <main className="container mx-auto flex-1 p-6 pb-16">
@@ -65,12 +117,24 @@ export default function Users() {
                   </td>
                   <td className="px-2 py-1 border border-slate-900">
                     {u?.habilitado ? (
-                      <button className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-red-600">
+                      <button
+                        onClick={() => {
+                          setOpenModalDisable(true);
+                          setUserIdDisable(u?.id);
+                        }}
+                        className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-red-600"
+                      >
                         <UserMinus />
                         Desabilitar
                       </button>
                     ) : (
-                      <button className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-green-600">
+                      <button
+                        onClick={() => {
+                          setOpenModalEnable(true);
+                          setUserIdEnable(u?.id);
+                        }}
+                        className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-green-600"
+                      >
                         <UserPlus />
                         Habilitar
                       </button>
@@ -82,6 +146,30 @@ export default function Users() {
           </table>
         </div>
       </section>
+
+      {openModalDisable && (
+        <Modal
+          title="Desabilitar usuário"
+          message="Tem certeza que deseja desabilitar este usuário?"
+          handleClose={() => {
+            setOpenModalDisable(false);
+            setUserIdDisable(null);
+          }}
+          handleSubmit={disableUser}
+        />
+      )}
+
+      {openModalEnable && (
+        <Modal
+          title="Habilitar usuário"
+          message="Tem certeza que deseja habilitar este usuário?"
+          handleClose={() => {
+            setOpenModalEnable(false);
+            setUserIdEnable(null);
+          }}
+          handleSubmit={enableUser}
+        />
+      )}
     </main>
   );
 }
