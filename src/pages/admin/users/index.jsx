@@ -122,7 +122,7 @@ export default function Users() {
                           setOpenModalDisable(true);
                           setUserIdDisable(u?.id);
                         }}
-                        className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-red-600"
+                        className="w-full flex items-center justify-center gap-2 px-2 py-1 rounded text-slate-200 bg-red-600"
                       >
                         <UserMinus />
                         Desabilitar
@@ -133,7 +133,7 @@ export default function Users() {
                           setOpenModalEnable(true);
                           setUserIdEnable(u?.id);
                         }}
-                        className="flex items-center justify-start gap-2 px-2 py-1 rounded text-slate-200 bg-green-600"
+                        className="w-full flex items-center justify-center gap-2 px-2 py-1 rounded text-slate-200 bg-green-600"
                       >
                         <UserPlus />
                         Habilitar
