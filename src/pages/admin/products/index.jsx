@@ -3,9 +3,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ENDPOINTS } from "../../../config/api";
 import FormProduct from "./FormProduct";
+import Modal from "../../../components/modal";
+import FormUpProduct from "./FormUpProduct";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [produtIdEdit, setProductIdEdit] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -78,7 +82,13 @@ export default function Products() {
                   <td className="px-2 py-1 border border-slate-900">
                     {p?.categoria.replaceAll(";", ", ")}
                   </td>
-                  <td className="px-2 py-1 border border-slate-900">
+                  <td
+                    onClick={() => {
+                      setOpenModal(true);
+                      setProductIdEdit(p?.id);
+                    }}
+                    className="px-2 py-1 border border-slate-900"
+                  >
                     <button className="w-full flex items-center justify-center gap-2 px-2 py-1 rounded text-slate-200 bg-slate-800">
                       <Pencil /> Alterar
                     </button>
@@ -97,6 +107,18 @@ export default function Products() {
 
         <FormProduct />
       </section>
+
+      {openModal && (
+        <Modal title="Editar Produto">
+          <FormUpProduct
+            produtoId={produtIdEdit}
+            handleClose={() => {
+              setOpenModal(false);
+              setProductIdEdit(null);
+            }}
+          />
+        </Modal>
+      )}
     </main>
   );
 }
