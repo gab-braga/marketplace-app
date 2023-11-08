@@ -2,6 +2,7 @@ import { Check, Pencil, X } from "@phosphor-icons/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ENDPOINTS } from "../../../config/api";
+import FormProduct from "./FormProduct";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -87,6 +88,14 @@ export default function Products() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="w-full mt-8">
+        <h2 className="text-xl text-slate-900 font-semibold uppercase">
+          Novo Produto
+        </h2>
+
+        <FormProduct />
       </section>
     </main>
   );
