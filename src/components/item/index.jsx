@@ -39,7 +39,7 @@ export default function Item({
               type="number"
               id="qnt"
               value={quantidade}
-              className="bg-slate-200 rounedd w-16 px-2"
+              className="bg-slate-200 rounded w-16 px-2"
             />
             <button
               onClick={() => changeQuantity(id, quantidade + 1)}

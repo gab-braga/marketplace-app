@@ -15,9 +15,9 @@ export const ENDPOINTS = {
 
   // client - profile
   getClientProfile: (id) => `${BASE_URL}/client/profile/${id}`,
-  getClientProfile: (id) => `${BASE_URL}/client/profile/${id}/address`,
+  getClientAddress: (id) => `${BASE_URL}/client/profile/${id}/address`,
   putClientProfile: (id) => `${BASE_URL}/client/profile/${id}`,
-  putClientProfile: (id) => `${BASE_URL}/client/profile/${id}/address`,
+  putClientAddress: (id) => `${BASE_URL}/client/profile/${id}/address`,
   putClientPassword: (id) => `${BASE_URL}/client/profile/${id}/password`,
   putClientPhoto: (id) => `${BASE_URL}/client/profile/${id}/photo`,
 
